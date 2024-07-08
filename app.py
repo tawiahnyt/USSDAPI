@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_user, LoginManager, login_required, current_user, logout_user, UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from flask_sqlalchemy import SQLAlchemy
 import json
 
@@ -10,7 +11,9 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'any-secret-key-you-choose'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JWT_SECRET_KEY'] = 'jwt-secret-key'
 db = SQLAlchemy(app)
+jwt = JWTManager(app)
 
 
 class StudentData(UserMixin, db.Model):
@@ -97,7 +100,7 @@ with open('courses.json') as file:
     data = json.load(file)
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/', methods=['POST'])
 def login():
     data = request.json
     username = data.get('username')
@@ -110,8 +113,10 @@ def login():
     if not check_password_hash(student.password, password):
         return jsonify({'error': 'Incorrect password, please try again'}), 401
 
-    login_user(student)
-    return jsonify({'message': 'Logged in successfully'}), 200
+    # login_user(student)
+    # return jsonify({'message': 'Logged in successfully'}), 200
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token), 200
 
 
 @app.route('/logout', methods=['POST'])
