@@ -113,10 +113,17 @@ def login():
     if not check_password_hash(student.password, password):
         return jsonify({'error': 'Incorrect password, please try again'}), 401
 
+    user = {
+        username: student,
+        password: check_password_hash(student.password, password)
+    }
     # login_user(student)
     # return jsonify({'message': 'Logged in successfully'}), 200
-    access_token = create_access_token(identity=username)
-    return jsonify(access_token=access_token), 200
+    # access_token = create_access_token(identity=username)
+    # return jsonify(access_token=access_token), 200
+
+    print(jsonify(user))
+    return jsonify(user)
 
 
 @app.route('/logout', methods=['POST'])
@@ -262,4 +269,4 @@ def evaluation():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=4000)
