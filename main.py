@@ -138,11 +138,8 @@ def login():
     if not check_password_hash(student.password, password):
         return jsonify({'error': 'Incorrect password, please try again'}), 401
 
-<<<<<<< HEAD
     login_user(student)
     # return jsonify({'message': 'Logged in successfully'}), 200
-=======
->>>>>>> cd7a427fe83f519aad2d010c0caa4772832e5412
     access_token = create_access_token(identity=username)
     print(access_token)
     return jsonify(access_token=access_token), 200
@@ -291,3 +288,4 @@ def evaluation():
 
 
 if __name__ == '__main__':
+    app.run(debug=True)
