@@ -1,7 +1,8 @@
-from flask import Flask, jsonify, request
-from flask_sqlalchemy import SQLAlchemy
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
+from flask_login import login_user, LoginManager, login_required, current_user, logout_user, UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_sqlalchemy import SQLAlchemy
 import json
 
 
@@ -11,12 +12,11 @@ app.config['SECRET_KEY'] = 'any-secret-key-you-choose'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'jwt-secret-key'
-
 db = SQLAlchemy(app)
 jwt = JWTManager(app)
 
 
-class StudentData(db.Model):
+class StudentData(UserMixin, db.Model):
     __tablename__ = 'student_data'
     student_id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(250))
@@ -32,13 +32,18 @@ class StudentData(db.Model):
     enrollment_date = db.Column(db.String(250))
     graduation_date = db.Column(db.String(250))
     degree_programmes = db.Column(db.String(250))
+    undergraduate_programmes = db.Column(db.String(250))
     guardian_name = db.Column(db.String(250))
     guardian_email = db.Column(db.String(250))
     guardian_phone = db.Column(db.String(250))
     guardian_address = db.Column(db.String(250))
     password = db.Column(db.String(250))
 
-class StudentResultData(db.Model):
+    def get_id(self):
+        return self.student_id
+
+
+class StudentResultData(UserMixin, db.Model):
     __tablename__ = 'results_data'
     student_id = db.Column(db.Integer, primary_key=True)
     MATH_173 = db.Column(db.Integer)
@@ -82,12 +87,45 @@ class StudentResultData(db.Model):
     IT_306 = db.Column(db.Integer)
 
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(student_id):
+    return StudentData.query.get(int(student_id))
+
+
 with open('courses.json') as file:
     data = json.load(file)
 
 
-# Login Route
-@app.route('/', methods=['POST'])
+# @app.route('/', methods=['POST'])
+# def login():
+#     data = request.json
+#     username = data.get('username')
+#     password = data.get('password')
+#
+#     student = StudentData.query.filter_by(student_id=username).first()
+#
+#     if not student:
+#         return jsonify({'error': 'Student ID not found, please try again'}), 404
+#     if not check_password_hash(student.password, password):
+#         return jsonify({'error': 'Incorrect password, please try again'}), 401
+#
+#     user = {
+#         username: student,
+#         password: check_password_hash(student.password, password)
+#     }
+#     # login_user(student)
+#     # return jsonify({'message': 'Logged in successfully'}), 200
+#     # access_token = create_access_token(identity=username)
+#     # return jsonify(access_token=access_token), 200
+#
+#     print(jsonify(user))
+#     return jsonify(user)
+
+@app.route('/login', methods=['POST'])
 def login():
     data = request.json
     username = data.get('username')
@@ -100,56 +138,45 @@ def login():
     if not check_password_hash(student.password, password):
         return jsonify({'error': 'Incorrect password, please try again'}), 401
 
+<<<<<<< HEAD
+    login_user(student)
+    # return jsonify({'message': 'Logged in successfully'}), 200
+=======
+>>>>>>> cd7a427fe83f519aad2d010c0caa4772832e5412
     access_token = create_access_token(identity=username)
+    print(access_token)
     return jsonify(access_token=access_token), 200
 
 
-# Home Route
-@app.route('/home', methods=['GET'])
-@jwt_required()
-def home():
-    current_user_id = get_jwt_identity()
-    student = StudentData.query.filter_by(student_id=current_user_id).first()
-
-    home_data = {
-        'first_name': student.first_name,
-        'last_name': student.last_name,
-        'other_name': student.other_name,
-        'student_email': student.student_email,
-        'gender': student.gender
-    }
-    return jsonify(home_data), 200
+@app.route('/logout', methods=['POST'])
+def logout():
+    logout_user()
+    return jsonify({'message': 'Logged out successfully'}), 200
 
 
-# Account Route
 @app.route('/account', methods=['GET', 'POST'])
-@jwt_required()
+@login_required
 def account():
-    current_user = get_jwt_identity()
-    student = StudentData.query.filter_by(student_id=current_user).first()
-
     if request.method == 'GET':
-        if not student:
-            return jsonify({'error': 'User not found'}), 404
         account_data = {
-            'student_id': student.student_id,
-            'first_name': student.first_name,
-            'last_name': student.last_name,
-            'other_name': student.other_name,
-            'date_of_birth': student.date_of_birth,
-            'phone': student.phone,
-            'email': student.email,
-            'student_email': student.student_email,
-            'gender': student.gender,
-            'level': student.level,
-            'student_type': student.student_type,
-            'enrollment_date': student.enrollment_date,
-            'graduation_date': student.graduation_date,
-            'degree_programmes': student.degree_programmes,
-            'guardian_name': student.guardian_name,
-            'guardian_email': student.guardian_email,
-            'guardian_phone': student.guardian_phone,
-            'guardian_address': student.guardian_address,
+            'student_id': current_user.student_id,
+            'first_name': current_user.first_name,
+            'last_name': current_user.last_name,
+            'other_name': current_user.other_name,
+            'date_of_birth': current_user.date_of_birth,
+            'phone': current_user.phone,
+            'email': current_user.email,
+            'student_email': current_user.student_email,
+            'gender': current_user.gender,
+            'level': current_user.level,
+            'student_type': current_user.student_type,
+            'enrollment_date': current_user.enrollment_date,
+            'graduation_date': current_user.graduation_date,
+            'degree_programmes': current_user.degree_programmes,
+            'guardian_name': current_user.guardian_name,
+            'guardian_email': current_user.guardian_email,
+            'guardian_phone': current_user.guardian_phone,
+            'guardian_address': current_user.guardian_address,
         }
         return jsonify(account_data), 200
 
@@ -161,12 +188,12 @@ def account():
         new_password = data.get('new_password')
         confirm_password = data.get('confirm_password')
 
-        if not check_password_hash(student.password, password):
+        if not check_password_hash(current_user.password, password):
             return jsonify({'error': 'Current password is incorrect, please try again'}), 400
         if new_password != confirm_password:
             return jsonify({'error': 'New passwords do not match, please try again'}), 400
 
-        student.password = generate_password_hash(new_password)
+        current_user.password = generate_password_hash(new_password)
         db.session.commit()
         return jsonify({'message': 'Password changed successfully'}), 200
 
@@ -179,41 +206,33 @@ def account():
         additional_contact_email = data.get('additional_contact_email')
 
         if contact_name:
-            student.emergency_contact_name = contact_name
+            current_user.emergency_contact_name = contact_name
         if contact_mobile:
-            student.emergency_contact_mobile = contact_mobile
+            current_user.emergency_contact_mobile = contact_mobile
         if contact_email:
-            student.emergency_contact_email = contact_email
+            current_user.emergency_contact_email = contact_email
         if contact_address:
-            student.emergency_contact_address = contact_address
+            current_user.emergency_contact_address = contact_address
         if alternative_email:
-            student.alternative_email = alternative_email
+            current_user.alternative_email = alternative_email
         if additional_contact_email:
-            student.additional_contact_email = additional_contact_email
+            current_user.additional_contact_email = additional_contact_email
 
         db.session.commit()
         return jsonify({'message': 'Emergency contact information updated successfully'}), 200
 
 
-# Courses Route
 @app.route('/courses', methods=['GET'])
-@jwt_required()
+@login_required
 def courses():
-    current_user = get_jwt_identity()
-    student = StudentData.query.filter_by(student_id=current_user).first()
-
-    with open('courses.json') as file:
-        data = json.load(file)
-    student_courses = data[student.degree_programmes][student.level]['first_semester']
+    student_courses = data[current_user.degree_programmes][current_user.level]['first_semester']
     return jsonify(student_courses), 200
 
 
-# Result Route
 @app.route('/results', methods=['GET'])
-@jwt_required()
+@login_required
 def results():
-    current_user = get_jwt_identity()
-    student_results = db.session.query(StudentResultData).filter_by(student_id=current_user).first()
+    student_results = db.session.query(StudentResultData).filter_by(student_id=current_user.student_id).first()
     if not student_results:
         return jsonify({'error': 'Results not found'}), 404
 
@@ -262,20 +281,13 @@ def results():
 
     return jsonify(results_data), 200
 
-# Evaluation Route
+
 @app.route('/evaluation', methods=['GET'])
-@jwt_required()
+@login_required
 def evaluation():
     # Assuming this returns some evaluation data in JSON format
     evaluation_data = {'message': 'Evaluation endpoint'}
     return jsonify(evaluation_data), 200
 
 
-# # Logout Route
-# @app.route('/logout')
-# def logout():
-
-
-
 if __name__ == '__main__':
-    app.run(debug=True, port=4400)
