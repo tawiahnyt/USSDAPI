@@ -100,7 +100,32 @@ with open('courses.json') as file:
     data = json.load(file)
 
 
-@app.route('/', methods=['POST'])
+# @app.route('/', methods=['POST'])
+# def login():
+#     data = request.json
+#     username = data.get('username')
+#     password = data.get('password')
+#
+#     student = StudentData.query.filter_by(student_id=username).first()
+#
+#     if not student:
+#         return jsonify({'error': 'Student ID not found, please try again'}), 404
+#     if not check_password_hash(student.password, password):
+#         return jsonify({'error': 'Incorrect password, please try again'}), 401
+#
+#     user = {
+#         username: student,
+#         password: check_password_hash(student.password, password)
+#     }
+#     # login_user(student)
+#     # return jsonify({'message': 'Logged in successfully'}), 200
+#     # access_token = create_access_token(identity=username)
+#     # return jsonify(access_token=access_token), 200
+#
+#     print(jsonify(user))
+#     return jsonify(user)
+
+@app.route('/login', methods=['POST'])
 def login():
     data = request.json
     username = data.get('username')
@@ -113,8 +138,11 @@ def login():
     if not check_password_hash(student.password, password):
         return jsonify({'error': 'Incorrect password, please try again'}), 401
 
+<<<<<<< HEAD
     login_user(student)
     # return jsonify({'message': 'Logged in successfully'}), 200
+=======
+>>>>>>> cd7a427fe83f519aad2d010c0caa4772832e5412
     access_token = create_access_token(identity=username)
     print(access_token)
     return jsonify(access_token=access_token), 200
@@ -263,4 +291,8 @@ def evaluation():
 
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     app.run(debug=True, port=4400)
+=======
+    app.run(degug=True)
+>>>>>>> cd7a427fe83f519aad2d010c0caa4772832e5412
