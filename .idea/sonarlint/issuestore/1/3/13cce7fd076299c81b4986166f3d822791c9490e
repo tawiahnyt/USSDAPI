@@ -1,5 +1,5 @@
 
-mpython:S6779"#Don't disclose "Flask" secret keys.(ãé¥ıÿÿÿÿ8§å‘ñˆ2J$e1db8cb1-96ff-425e-a828-4b7afcf88d4d
-qpython:S6781"'Don't disclose "Flask" JWT secret keys.(ıµ•ÿÿÿÿÿ8ÖéÂñˆ2J$27c78ee4-b97d-48d3-90d6-fbcc24d94137
-cpython:S125t"Remove this commented out code.(Ú¤Õ‡8¸ÈÆñˆ2J$2d3ede85-6d8a-4356-b09e-04001a8e0dcf
-ypython:S3776‚"TRefactor this function to reduce its Cognitive Complexity from 19 to the 15 allowed.(Ö«—ùÿÿÿÿ8×âÆñˆ2
+mpython:S6779"#Don't disclose "Flask" secret keys.(ãé¥ıÿÿÿÿ8§å‘ñˆ2J$ae409c20-21f5-4150-bc6d-c2f7a5a3d256
+qpython:S6781"'Don't disclose "Flask" JWT secret keys.(ıµ•ÿÿÿÿÿ8ÖéÂñˆ2J$94021db9-bcd6-4895-9767-906c5872b6b1
+hpython:S125u"Remove this commented out code.(ĞÎ¤Šÿÿÿÿÿ8Æ•Â¥Š2J$74841dc0-7766-4089-9daa-2f8efe51157e
+Ÿpython:S3776‚"TRefactor this function to reduce its Cognitive Complexity from 19 to the 15 allowed.(Ö«—ùÿÿÿÿ8×âÆñˆ2J$87771101-9874-4871-ad34-75af8f504049
