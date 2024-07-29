@@ -86,6 +86,18 @@ with open('courses.json') as file:
     data = json.load(file)
 
 
+# Checks if the student id is in the database
+@app.route('/student_id', methods=['POST'])
+def student_id():
+    data = request.json
+    student_id = data.get('student_id')
+    student = StudentData.query.filter_by(student_id=student_id).first()
+
+    if not student:
+        return jsonify({'error': 'Student ID not found, please try again'}), 404
+    return jsonify({'message': f'Welcome {student.firstname}'}), 200
+
+
 # Login Route
 @app.route('/', methods=['POST'])
 def login():
