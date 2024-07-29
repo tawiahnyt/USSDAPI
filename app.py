@@ -90,8 +90,9 @@ with open('courses.json') as file:
 @app.route('/student_id', methods=['POST'])
 def student_id():
     data = request.json
-    student_id = data.get('student_id')
-    student = StudentData.query.filter_by(student_id=student_id).first()
+    username = data.get('student_id')
+
+    student = StudentData.query.filter_by(student_id=username).first()
 
     if not student:
         return jsonify({'error': 'Student ID not found, please try again'}), 404
