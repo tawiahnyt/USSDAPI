@@ -52,6 +52,7 @@ class StudentData(db.Model):
 class StudentResultData(db.Model):
     __tablename__ = 'results_data'
     student_id = db.Column(db.Integer, primary_key=True)
+    level = db.Column(db.Integer)
     MATH_173 = db.Column(db.Integer)
     MATH_171 = db.Column(db.Integer)
     FREN_171 = db.Column(db.Integer)
@@ -225,11 +226,13 @@ def courses():
 def results():
     current_user = get_jwt_identity()
     student_results = db.session.query(StudentResultData).filter_by(student_id=current_user).first()
+
     if not student_results:
         return jsonify({'error': 'Results not found'}), 404
 
     results_data = {
         'student_id': student_results.student_id,
+        'level': student_results.level,
         'MATH_173': student_results.MATH_173,
         'MATH_171': student_results.MATH_171,
         'FREN_171': student_results.FREN_171,

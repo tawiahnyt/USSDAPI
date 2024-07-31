@@ -87,7 +87,7 @@ with open('courses.json') as file:
 
 
 # Checks if the student id is in the database
-@app.route('/student_id', methods=['POST'])
+@app.route('/1', methods=['POST'])
 def student_id():
     data = request.json
     username = data.get('student_id')
@@ -232,6 +232,7 @@ def results():
 
     results_data = {
         'student_id': student_results.student_id,
+        'level': student_results.level,
         'MATH_173': student_results.MATH_173,
         'MATH_171': student_results.MATH_171,
         'FREN_171': student_results.FREN_171,
