@@ -1,5 +1,5 @@
 
-mpython:S6779"#Don't disclose "Flask" secret keys.(ãé¥ıÿÿÿÿ8ÁµİÎ2J$233b46e7-fb21-49e9-b4ac-ec1ee6795917
-qpython:S6781"'Don't disclose "Flask" JWT secret keys.(ıµ•ÿÿÿÿÿ8ÁµİÎ2J$c6f86508-da42-49b0-b3a8-907501dbf080
-wpython:S1172"2Remove the unused function parameter "jwt_header".(²Ë¤€8ÁµİÎ2J$a29a9e97-c2ae-40a8-bde8-c130d82bb609
-Ÿpython:S3776‹"TRefactor this function to reduce its Cognitive Complexity from 21 to the 15 allowed.(Ö«—ùÿÿÿÿ8ÁµİÎ2J$7a65be38-3961-436e-8f6b-13772642e9f4
+Gpython:S6779"#Don't disclose "Flask" secret keys.(ãé¥ıÿÿÿÿ8‘¢Ûó2
+Kpython:S6781"'Don't disclose "Flask" JWT secret keys.(ıµ•ÿÿÿÿÿ8’¢Ûó2
+Qpython:S1172"2Remove the unused function parameter "jwt_header".(²Ë¤€8’¢Ûó2
+ypython:S3776Œ"TRefactor this function to reduce its Cognitive Complexity from 21 to the 15 allowed.(Ö«—ùÿÿÿÿ8’¢Ûó2

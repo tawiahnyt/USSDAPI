@@ -47,6 +47,7 @@ class StudentData(db.Model):
     guardian_phone = db.Column(db.String(250))
     guardian_address = db.Column(db.String(250))
     password = db.Column(db.String(250))
+    registration_status = db.Column(db.Integer)
 
 
 class StudentResultData(db.Model):
@@ -162,6 +163,7 @@ def account():
             'guardian_email': student.guardian_email,
             'guardian_phone': student.guardian_phone,
             'guardian_address': student.guardian_address,
+            'registration_status': student.registration_status,
         }
         return jsonify(account_data), 200
 
@@ -218,6 +220,24 @@ def courses():
         data = json.load(file)
     student_courses = data[student.degree_programmes][student.level]['first_semester']
     return jsonify(student_courses), 200
+
+
+@app.route('/complete_registration', methods=['PATCH'])
+@jwt_required()
+def complete_registration():
+    current_user_id = get_jwt_identity()
+    student = StudentData.query.filter_by(student_id=current_user_id).first()
+
+    if not student:
+        return jsonify({'error': 'Student not found'}), 404
+
+    if student.registration_status == 1:
+        return jsonify({'message': 'Registration already completed'}), 400
+
+    student.registration_status = 1
+    db.session.commit()
+
+    return jsonify({'message': 'Registration status updated successfully'}), 200
 
 
 # Result Route
