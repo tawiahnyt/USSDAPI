@@ -247,7 +247,6 @@ def results():
     current_user = get_jwt_identity()
     student_results = db.session.query(StudentResultData).filter_by(student_id=current_user).first()
 
-
     results_data = {
         'student_id': student_results.student_id,
         'level': student_results.level,
@@ -312,6 +311,8 @@ def logout():
 
 
 if __name__ == '__main__':
-    # app.run(debug=True, host='0.0.0.0')
-    app.run(debug=True, port=8000)
-    
+
+    app.run(debug=True, host='0.0.0.0')
+
+
+
