@@ -1,10 +1,9 @@
 
-’python:S1192U"MDefine a constant instead of duplicating this literal 'courses.json' 4 times.(µÌ·À8ë€’ñ2J$b6d2cb8d-e962-46c7-95d1-ff47f263eddd
-«python:S1192b"gDefine a constant instead of duplicating this literal 'Student ID not found, please try again' 3 times.(¼Šæ(8­¼¸ó2J$76089681-7492-4a2a-a9bf-6045f63ff055
+’python:S1192U"MDefine a constant instead of duplicating this literal 'courses.json' 4 times.(µÌ·À8ë€’ñ2J$11b68bb2-389d-4070-8257-18db69cd49ac
 mpython:S6779
-"#Don't disclose "Flask" secret keys.(ãé¥ıÿÿÿÿ8ì€’ñ2J$97c1061e-8949-441c-a199-c79e194072e1
-qpython:S6781"'Don't disclose "Flask" JWT secret keys.(ıµ•ÿÿÿÿÿ8ì€’ñ2J$bab88b7f-9c2d-4be7-a1ef-7627875ca749
-Ÿpython:S3776Œ"TRefactor this function to reduce its Cognitive Complexity from 21 to the 15 allowed.(Ö«—ùÿÿÿÿ8ì€’ñ2J$e9b2bbe9-f2de-4b23-ba0a-34e7554baf30
-npython:S6779±"#Don't disclose "Flask" secret keys.(ãé¥ıÿÿÿÿ8ì€’ñ2J$0d621f1a-a6d1-470e-9cc5-05fd3ff17297
-rpython:S6781´"'Don't disclose "Flask" JWT secret keys.(ıµ•ÿÿÿÿÿ8í€’ñ2J$bb5aa3cd-9dba-43aa-9463-59db5b61d093
-Ÿpython:S3776¦"TRefactor this function to reduce its Cognitive Complexity from 21 to the 15 allowed.(Ö«—ùÿÿÿÿ8í€’ñ2J$5893a6b9-a82d-49c8-a2ad-e6b2eaee837f
+"#Don't disclose "Flask" secret keys.(ãé¥ıÿÿÿÿ8ì€’ñ2J$75f99852-0858-4f4d-bfb8-bb17294a9c83
+qpython:S6781"'Don't disclose "Flask" JWT secret keys.(ıµ•ÿÿÿÿÿ8ì€’ñ2J$1226835f-363e-47f5-b78c-267ecb0d694e
+Ÿpython:S3776Œ"TRefactor this function to reduce its Cognitive Complexity from 21 to the 15 allowed.(Ö«—ùÿÿÿÿ8ì€’ñ2J$18ca57e4-55a5-4102-a382-9de4b433d03f
+npython:S6779±"#Don't disclose "Flask" secret keys.(ãé¥ıÿÿÿÿ8ì€’ñ2J$7c688433-1d32-4628-a8a4-0bb50602c832
+rpython:S6781´"'Don't disclose "Flask" JWT secret keys.(ıµ•ÿÿÿÿÿ8í€’ñ2J$43341398-8626-472a-b872-b18b35ba00d6
+Ÿpython:S3776¦"TRefactor this function to reduce its Cognitive Complexity from 21 to the 15 allowed.(Ö«—ùÿÿÿÿ8í€’ñ2J$026dd340-0a80-4b7b-9ccd-a480183fc2cb
